@@ -1,46 +1,45 @@
-
-FROM php:7.2-fpm
-ARG ENVIRONMENT=production
-
 ARG NAMESERVER
 ARG SOURCEMIRROR
 ARG TIMEZONE
 
+FROM php:7.2-fpm
+ARG ENVIRONMENT=production
+
 ENV DEBIAN_FRONTEND noninteractive
 
 # change name server
-RUN set -eux; \
+RUN set -ex; \
     if [ $NAMESERVER ]; then \
         echo "nameserver $NAMESERVER" > /etc/resolv.conf; \
     fi;
 
 # change source mirror
-RUN set -eux; \
+RUN set -ex; \
     if [ $SOURCEMIRROR ]; then \
         sed -i "s/\(deb\|security\).debian.org/$SOURCEMIRROR/g" /etc/apt/sources.list; \
     fi;
 
 # update apt && pecl
-RUN set -eux; \
+RUN set -ex; \
     apt-get update && apt upgrade -y; \
     pecl channel-update pecl.php.net;
 
 # change time zone
-RUN set -eux; \
+RUN set -ex; \
     if [ $TIMEZONE ]; then \
         cp /usr/share/zoneinfo/$TIMEZONE /etc/localtime && echo $TIMEZONE > /etc/timezone; \
     fi;
 
 # change php ini
-RUN set -eux; \
+RUN set -ex; \
     cp "$PHP_INI_DIR/php.ini-$ENVIRONMENT" "$PHP_INI_DIR/php.ini"
 
 # install tools
-RUN set -eux; \
+RUN set -ex; \
     apt-get install -y git;
 
 # install tools(development)
-RUN set -eux; \
+RUN set -ex; \
     if [ "$ENVIRONMENT" = "development" ]; then \
         apt-get install -y \
             iputils-ping \
@@ -53,7 +52,7 @@ RUN set -eux; \
     fi;
 
 # install extension
-RUN set -eux; \
+RUN set -ex; \
     pecl install redis && docker-php-ext-enable redis; \
     # install gd
     apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
@@ -69,7 +68,7 @@ RUN set -eux; \
         pdo_mysql;
 
 # install extension(development)
-RUN set -eux; \
+RUN set -ex; \
     if [ "$ENVIRONMENT" = "development" ]; then \
         # install xdebug
         pecl install xdebug && docker-php-ext-enable xdebug; \
@@ -81,7 +80,7 @@ RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && apt-get clean;
 
 # install composer
-RUN set -eux; \
+RUN set -ex; \
     curl -o /usr/bin/composer https://mirrors.aliyun.com/composer/composer.phar; \
     chmod +x /usr/bin/composer; \
     composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
