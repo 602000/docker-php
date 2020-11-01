@@ -36,7 +36,11 @@ RUN set -ex; \
 
 # install tools
 RUN set -ex; \
-    apt-get install -y git;
+    apt-get install -y \
+        supervisor \
+        rsyslog \
+        cron \
+        git;
 
 # install tools(development)
 RUN set -ex; \
@@ -47,12 +51,17 @@ RUN set -ex; \
             dnsutils \
             telnet \
             procps \
+            mycli \
             wget \
-            vim; \
+            vim \
+            jq; \
     fi;
 
 # install extension
 RUN set -ex; \
+    # install inotify
+    pecl install https://pecl.php.net/get/inotify-2.0.0.tgz && docker-php-ext-enable inotify; \
+    # install redis
     pecl install redis && docker-php-ext-enable redis; \
     # install gd
     apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
@@ -60,6 +69,8 @@ RUN set -ex; \
         && docker-php-ext-install -j$(nproc) gd; \
     # install zip
     apt-get install -y libzip-dev && docker-php-ext-install zip; \
+    # install pcntl
+    docker-php-ext-configure pcntl --enable-pcntl && docker-php-ext-install pcntl; \
     # install other
     docker-php-ext-install \
         bcmath \
@@ -84,6 +95,12 @@ RUN set -ex; \
     curl -o /usr/bin/composer https://mirrors.aliyun.com/composer/composer.phar; \
     chmod +x /usr/bin/composer; \
     composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
+
+# install crontab
+RUN set -ex; \
+    touch /var/spool/cron/crontabs/root; \
+    chown -R root:crontab /var/spool/cron/crontabs/root; \
+    chmod 600 /var/spool/cron/crontabs/root;
 
 WORKDIR /var/www
 
