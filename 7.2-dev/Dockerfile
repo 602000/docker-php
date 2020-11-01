@@ -1,9 +1,9 @@
+FROM php:7.2-fpm
+ARG ENVIRONMENT=development
+
 ARG NAMESERVER
 ARG SOURCEMIRROR
 ARG TIMEZONE
-
-FROM php:7.2-fpm
-ARG ENVIRONMENT=development
 
 ENV DEBIAN_FRONTEND noninteractive
 
