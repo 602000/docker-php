@@ -1,6 +1,6 @@
 # `php-fpm`
 
-- 基于官方 `php:7.4.0-fpm` 镜像构建的 `php-fpm` 镜像
+- 基于官方 `php:7.4-fpm` 镜像构建的 `php-fpm` 镜像
 - 附带 `composer`
 
 # 安装扩展
@@ -20,7 +20,6 @@
 - `json`
 - `libxml`
 - `mbstring`
-- `memcached`
 - `mysqli`
 - `mysqlnd`
 - `openssl`
