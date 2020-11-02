@@ -71,6 +71,8 @@ RUN set -ex; \
     apt-get install -y libzip-dev && docker-php-ext-install zip; \
     # install pcntl
     docker-php-ext-configure pcntl --enable-pcntl && docker-php-ext-install pcntl; \
+    # install swoole
+    pecl install swoole && docker-php-ext-enable swoole; \
     # install other
     docker-php-ext-install \
         bcmath \
