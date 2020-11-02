@@ -1,0 +1,1 @@
+wsl bin/build $args
