@@ -9,32 +9,32 @@ TIMEZONE=Asia/Shanghai
 if [ -n ${1} ]; then
     case ${1} in
         "latest")
-            PHPVERSION="7.4" ;
+            PHPVERSION="latest" ;
             ENVIRONMENT="production" ;;
         "latest-dev")
-            PHPVERSION="7.4-dev";
+            PHPVERSION="latest";
             ENVIRONMENT="development" ;;
 
         "7")
-            PHPVERSION="7.4";
+            PHPVERSION="7";
             ENVIRONMENT="production" ;;
         "7-dev")
-            PHPVERSION="7.4-dev";
+            PHPVERSION="7";
             ENVIRONMENT="development" ;;
 
         "7.4")
-            PHPVERSION="${1}";
+            PHPVERSION="7.4";
             ENVIRONMENT="production" ;;
         "7.4-dev")
-            PHPVERSION="${1}";
+            PHPVERSION="7.4";
             ENVIRONMENT="development" ;;
 
         "7.2")
-            PHPVERSION="${1}";
+            PHPVERSION="7.2";
             ENVIRONMENT="production" ;;
 
         "7.2-dev")
-            PHPVERSION="${1}";
+            PHPVERSION="7.2";
             ENVIRONMENT="development" ;;
     esac
 fi
