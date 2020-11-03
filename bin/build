@@ -1,25 +1,48 @@
 #!/bin/bash
+PHPVERSION=
+ENVIRONMENT=
 NAMESERVER=233.5.5.5
 SOURCEMIRROR=mirrors.aliyun.com
 TIMEZONE=Asia/Shanghai
 
-VERSION=
 if [ -n ${1} ]; then
     case ${1} in
-        "latest") VERSION="7.4" ;;
-        "latest-dev") VERSION="7.4-dev";;
-        "7") VERSION="7.4";;
-        "7-dev") VERSION="7.4-dev";;
-        "7.4") VERSION="${1}";;
-        "7.4-dev") VERSION="${1}";;
-        "7.2") VERSION="${1}";;
-        "7.2-dev") VERSION="${1}";;
+        "latest") PHPVERSION="7.4" ;;
+        "latest") ENVIRONMENT="production" ;;
+
+        "latest-dev") PHPVERSION="7.4-dev";;
+        "latest-dev") ENVIRONMENT="development" ;;
+
+        "7") PHPVERSION="7.4";;
+        "7") ENVIRONMENT="production" ;;
+
+        "7-dev") PHPVERSION="7.4-dev";;
+        "7-dev") ENVIRONMENT="development" ;;
+
+        "7.4") PHPVERSION="${1}";;
+        "7.4") ENVIRONMENT="production" ;;
+
+        "7.4-dev") PHPVERSION="${1}";;
+        "7.4-dev") ENVIRONMENT="development" ;;
+
+        "7.2") PHPVERSION="${1}";;
+        "7.2") ENVIRONMENT="production" ;;
+
+        "7.2-dev") PHPVERSION="${1}";;
+        "7.2-dev") ENVIRONMENT="development" ;;
     esac
 fi
 
-if [ "${VERSION}" != "" ];then
-    DOCKERFILE_PATH="${VERSION}/Dockerfile"
-    IMAGE_NAME="qianjun/php:${VERSION}"
-    echo docker build --build-arg NAMESERVER=$NAMESERVER --build-arg SOURCEMIRROR=$SOURCEMIRROR --build-arg TIMEZONE=$TIMEZONE -f $DOCKERFILE_PATH -t $IMAGE_NAME .
-    docker build --build-arg NAMESERVER=$NAMESERVER --build-arg SOURCEMIRROR=$SOURCEMIRROR --build-arg TIMEZONE=$TIMEZONE -f $DOCKERFILE_PATH -t $IMAGE_NAME .
+if [ "${PHPVERSION}" != "" ];then
+    DOCKERFILE_PATH="Dockerfile"
+    IMAGE_NAME="qianjun/php:${1}"
+    docker build \
+        --build-arg PHPVERSION=$PHPVERSION \
+        --build-arg ENVIRONMENT=$ENVIRONMENT \
+        --build-arg NAMESERVER=$NAMESERVER \
+        --build-arg SOURCEMIRROR=$SOURCEMIRROR \
+        --build-arg TIMEZONE=$TIMEZONE \
+        -f $DOCKERFILE_PATH \
+        -t $IMAGE_NAME \
+        .
 fi

@@ -1,2 +1,14 @@
 #!/bin/bash
-docker build --build-arg NAMESERVER=$NAMESERVER --build-arg SOURCEMIRROR=$SOURCEMIRROR --build-arg TIMEZONE=$TIMEZONE -f $DOCKERFILE_PATH -t $IMAGE_NAME .
+
+PHPVERSION=7.4
+ENVIRONMENT=production
+
+docker build \
+    --build-arg PHPVERSION=$PHPVERSION \
+    --build-arg ENVIRONMENT=$ENVIRONMENT \
+    --build-arg NAMESERVER=$NAMESERVER \
+    --build-arg SOURCEMIRROR=$SOURCEMIRROR \
+    --build-arg TIMEZONE=$TIMEZONE \
+    -f $DOCKERFILE_PATH \
+    -t $IMAGE_NAME \
+    .
