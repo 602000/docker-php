@@ -1,3 +1,6 @@
 .git
 .gitignore
+.gitattributes
 README.md
+bin/build.cmd
+bin/build.ps1

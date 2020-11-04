@@ -43,20 +43,18 @@ RUN set -ex; \
         cron \
         git;
 
-# install tools(development)
+# install tools
 RUN set -ex; \
-    if [ "$ENVIRONMENT" = "development" ]; then \
-        apt-get install -y \
-            iputils-ping \
-            net-tools \
-            dnsutils \
-            telnet \
-            procps \
-            mycli \
-            wget \
-            vim \
-            jq; \
-    fi;
+    apt-get install -y \
+        iputils-ping \
+        net-tools \
+        dnsutils \
+        telnet \
+        procps \
+        mycli \
+        wget \
+        vim \
+        jq;
 
 # install extension
 RUN set -ex; \
@@ -80,13 +78,6 @@ RUN set -ex; \
         mysqli \
         opcache \
         pdo_mysql;
-
-# install extension(development)
-RUN set -ex; \
-    if [ "$ENVIRONMENT" = "development" ]; then \
-        # install xdebug
-        pecl install xdebug && docker-php-ext-enable xdebug; \
-    fi;
 
 # clean extension
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
