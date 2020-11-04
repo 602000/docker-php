@@ -96,6 +96,11 @@ RUN set -ex; \
     chown -R root:crontab /var/spool/cron/crontabs/root; \
     chmod 600 /var/spool/cron/crontabs/root;
 
+# set bash aliases
+RUN set -ex; \
+    sed -i "s/^# alias/alias/g" /root/.bashrc; \
+    sed -i "s/^# export/export/g" /root/.bashrc;
+
 WORKDIR /var/www
 
 EXPOSE 9000
