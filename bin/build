@@ -9,10 +9,24 @@ TIMEZONE=Asia/Shanghai
 if [ -n ${1} ]; then
     case ${1} in
         "latest")
-            PHPVERSION="7" ;
+            PHPVERSION="8" ;
             ENVIRONMENT="production" ;;
         "latest-dev")
-            PHPVERSION="7";
+            PHPVERSION="8";
+            ENVIRONMENT="development" ;;
+
+        "8")
+            PHPVERSION="8";
+            ENVIRONMENT="production" ;;
+        "8-dev")
+            PHPVERSION="8";
+            ENVIRONMENT="development" ;;
+
+        "8.0")
+            PHPVERSION="8.0";
+            ENVIRONMENT="production" ;;
+        "8.0-dev")
+            PHPVERSION="8.0";
             ENVIRONMENT="development" ;;
 
         "7")
